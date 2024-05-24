@@ -21,6 +21,11 @@ def main():
   ibead = rank
   atypes = args.atypes
 
+  if rank==0:
+    print("Directory: ", directory)
+    print("Number of beads: ", nbead)
+    print("Atom types: ", atypes)
+
   assert len(atypes) == 1 or len(atypes) == 2, "Only one or two atom types are allowed!"
 
   t0 = time()
