@@ -12,6 +12,8 @@ def main():
   parser.add_argument("--nsamp", type=int, help="the number of samples to use for the calculation of rdf")
   parser.add_argument("--atypes", type=int, nargs="*", help="atom types to be considered in the calculation of rdf; same as LAMMPS atom types")
   parser.add_argument("--traj", type=str, help="trajectory file")
+  parser.add_argument("--rcut", type=float, help="cutoff radius for the calculation of rdf", default=6.0)
+  parser.add_argument("--nbin", type=int, help="number of bins for the calculation of rdf", default=100)
   args = parser.parse_args()
 
   directory = args.dir
@@ -71,8 +73,8 @@ def main():
   if rank==0:
     print("Reading samples costs %.4f s."%(t2-t0))
 
-  rcut=6
-  nbin=100
+  rcut=args.rcut
+  nbin=args.nbin
   dr=rcut/nbin
   r_array=np.linspace(0, rcut, num=nbin, endpoint=False)+0.5*dr
   r_array_10 = np.array([r_array for i in range(10)]).reshape(10, nbin)
